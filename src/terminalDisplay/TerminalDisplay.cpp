@@ -2245,17 +2245,15 @@ void TerminalDisplay::doPaste(QString text, bool appendReturn)
         text.append(QLatin1String("\r"));
     }
 
-    if (text.length() > 8000) {
-        if (KMessageBox::warningContinueCancel(
-                window(),
-                i18np("Are you sure you want to paste %1 character?", "Are you sure you want to paste %1 characters?", text.length()),
-                i18n("Confirm Paste"),
-                KStandardGuiItem::cont(),
-                KStandardGuiItem::cancel(),
-                QStringLiteral("ShowPasteHugeTextWarning"))
-            == KMessageBox::Cancel) {
-            return;
-        }
+    if (KMessageBox::warningContinueCancel(
+            window(),
+            i18np("Are you sure you want to paste %1 character?", "Are you sure you want to paste %1 characters?", text.length()),
+            i18n("Confirm Paste"),
+            KStandardGuiItem::cont(),
+            KStandardGuiItem::cancel(),
+            QStringLiteral("ShowPasteHugeTextWarning"))
+        == KMessageBox::Cancel) {
+        return;
     }
 
     // Most code in Konsole uses UTF-32. We're filtering
